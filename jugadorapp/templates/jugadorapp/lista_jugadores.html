@@ -1,0 +1,146 @@
+{% extends 'jugadorapp/base.html' %}
+
+{% block content %}
+<style>
+    /* Diseño del césped de la cancha */
+    .cancha-fondo {
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://www.transparenttextures.com/patterns/grass.png');
+        background-color: #2e7d32; /* Verde pasto */
+        padding: 50px 20px;
+        border-radius: 15px;
+        border: 4px solid #ffffff;
+        box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.5);
+        min-height: 60vh;
+    }
+    
+    /* Forma y diseño de la carta estilo FUT */
+    .fut-card {
+        width: 200px;
+        height: 310px;
+        position: relative;
+        text-align: center;
+        margin: 15px;
+        border-radius: 10% 10% 5% 5% / 15% 15% 5% 5%; /* Aproximación a la curva de la carta */
+        box-shadow: 0 15px 25px rgba(0,0,0,0.6);
+        transition: transform 0.3s ease;
+    }
+    .fut-card:hover {
+        transform: scale(1.05) translateY(-10px);
+        z-index: 10;
+    }
+    
+    /* Carta Dorada (Jugador Creado) */
+    .fut-gold {
+        background: linear-gradient(135deg, #e6c27a 0%, #d4af37 50%, #b38728 100%);
+        border: 2px solid #fff9e6;
+        color: #333333;
+    }
+    
+    /* Elementos dentro de la carta */
+    .fut-rating {
+        position: absolute;
+        top: 25px;
+        left: 20px;
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 1;
+    }
+    .fut-pos {
+        position: absolute;
+        top: 55px;
+        left: 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .fut-avatar {
+        margin-top: 35px;
+        width: 120px;
+        height: 120px;
+        /* Silueta gris de jugador */
+        background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
+        background-size: cover;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        border: 3px solid rgba(255,255,255,0.4);
+    }
+    .fut-name {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: 900;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+        padding-bottom: 5px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Botones de acción ocultos que aparecen al pasar el mouse */
+    .fut-actions {
+        position: absolute;
+        bottom: 15px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    .fut-card:hover .fut-actions {
+        opacity: 1;
+    }
+    
+    /* Cartas vacías (Siluetas) */
+    .fut-empty {
+        background: rgba(0, 0, 0, 0.4);
+        border: 2px dashed rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: rgba(255,255,255,0.5);
+    }
+</style>
+
+<div class="cancha-fondo">
+    <div class="row justify-content-center">
+        
+        <!-- Si hay jugadores registrados, dibuja sus cartas -->
+        {% if jugadores %}
+            {% for jugador in jugadores %}
+            <div class="col-auto">
+                <div class="fut-card fut-gold">
+                    <!-- Usamos la edad como si fuera la valoración (Rating) -->
+                    <div class="fut-rating">{{ jugador.edad }}</div>
+                    <div class="fut-pos">{{ jugador.posicion|slice:":3"|upper }}</div>
+                    
+                    <div class="fut-avatar"></div>
+                    
+                    <!-- Nombre y Apellido -->
+                    <div class="fut-name">{{ jugador.nombre }}<br>{{ jugador.apellido }}</div>
+                    
+                    <!-- Acciones para Matías (Editar/Eliminar) -->
+                    <div class="fut-actions">
+                        <a href="#" class="btn btn-sm btn-dark fw-bold rounded-pill shadow">Editar</a>
+                        <a href="#" class="btn btn-sm btn-danger fw-bold rounded-pill shadow">Borrar</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        <!-- Si la base de datos está vacía, dibuja plantillas vacías -->
+        {% else %}
+            {% for i in "123456" %}
+            <div class="col-auto">
+                <div class="fut-card fut-empty">
+                    <h1 class="display-1">+</h1>
+                    <p class="fw-bold">HUECO LIBRE</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

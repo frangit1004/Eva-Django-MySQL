@@ -1,0 +1,28 @@
+{% extends 'jugadorapp/base.html' %}
+
+{% block content %}
+<div class="text-center mt-3">
+    <h1 class="display-3 fw-bold" style="color: #d4af37; text-shadow: 2px 2px 5px rgba(0,0,0,0.8);">BIENVENIDO A TU CLUB</h1>
+    <p class="fs-4 text-light mt-3">Gestiona tu equipo formativo y lleva a tus jugadores a la gloria.</p>
+    
+    <div class="row justify-content-center mt-5">
+        <!-- Tarjeta para ir a la Plantilla -->
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark p-4 shadow-lg text-center h-100" style="border: 2px solid #d4af37; border-radius: 15px;">
+                <h3 class="text-white fw-bold">MI CLUB</h3>
+                <p class="text-secondary mb-4">Revisa tus cartas actuales, organiza tu 11 inicial y administra el plantel en la cancha.</p>
+                <a href="{% url 'lista_jugadores' %}" class="btn fw-bold text-dark w-100" style="background-color: #d4af37; padding: 12px;">ENTRAR A LA CANCHA</a>
+            </div>
+        </div>
+        
+        <!-- Tarjeta para ir a Fichar (Crear) -->
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark p-4 shadow-lg text-center h-100" style="border: 2px solid #ffffff; border-radius: 15px;">
+                <h3 class="text-white fw-bold">MERCADO / SOBRES</h3>
+                <p class="text-secondary mb-4">Abre nuevos sobres o inscribe a nuevas promesas para potenciar al equipo.</p>
+                <a href="{% url 'crear_jugador' %}" class="btn btn-light fw-bold text-dark w-100" style="padding: 12px;">+ FICHAR JUGADOR</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

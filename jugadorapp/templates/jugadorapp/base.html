@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Deportivo - Ultimate Team</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a; 
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            position: relative;
+        }
+        .hero-overlay {
+            background-color: rgba(0, 0, 0, 0.6); 
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .nav-custom {
+            background-color: #000000;
+            border-bottom: 2px solid #d4af37; 
+        }
+        .nav-custom .nav-link {
+            color: #ffffff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 15px 20px;
+        }
+        .nav-custom .nav-link:hover {
+            color: #d4af37;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner superior -->
+    <div class="hero-banner">
+        <div class="hero-overlay">
+            <h1 class="text-white fw-bold display-4" style="text-shadow: 0px 4px 10px rgba(0,0,0,0.9);">MI PLANTILLA</h1>
+            <p class="text-warning fs-5 fw-bold" style="text-shadow: 2px 2px 5px rgba(0,0,0,0.8);">Gestión de Equipo Formativo</p>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg nav-custom sticky-top">
+        <div class="container">
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'inicio' %}">INICIO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_jugadores' %}">MI CLUB (PLANTILLA)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: #d4af37;" href="{% url 'crear_jugador' %}">MERCADO (FICHAR)</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal -->
+    <div class="container-fluid mt-4 mb-5 px-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
