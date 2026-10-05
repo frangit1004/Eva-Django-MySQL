@@ -120,10 +120,10 @@
                     <!-- Nombre y Apellido -->
                     <div class="fut-name">{{ jugador.nombre }}<br>{{ jugador.apellido }}</div>
                     
-                    <!-- Acciones para Matías (Editar/Eliminar) -->
+                    <!-- Botones conectados a las vistas de editar y eliminar agregadas para completar el CRUD. (MJ) -->
                     <div class="fut-actions">
-                        <a href="#" class="btn btn-sm btn-dark fw-bold rounded-pill shadow">Editar</a>
-                        <a href="#" class="btn btn-sm btn-danger fw-bold rounded-pill shadow">Borrar</a>
+                        <a href="{% url 'editar_jugador' jugador.id %}" class="btn btn-sm btn-dark fw-bold rounded-pill shadow">Editar</a>
+                        <a href="{% url 'eliminar_jugador' jugador.id %}" class="btn btn-sm btn-danger fw-bold rounded-pill shadow">Borrar</a>
                     </div>
                 </div>
             </div>

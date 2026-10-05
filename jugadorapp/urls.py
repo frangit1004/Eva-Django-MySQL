@@ -9,4 +9,8 @@ urlpatterns = [
     path('plantilla/', views.lista_jugadores, name='lista_jugadores'), 
     
     path('crear/', views.crear_jugador, name='crear_jugador'),
+
+    # Rutas agregadas para conectar los botones Editar y Borrar con sus vistas. (MJ)
+    path('editar/<int:jugador_id>/', views.editar_jugador, name='editar_jugador'),
+    path('eliminar/<int:jugador_id>/', views.eliminar_jugador, name='eliminar_jugador'),
 ]
