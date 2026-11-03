@@ -1,0 +1,42 @@
+{% extends 'jugadorapp/base.html' %}
+
+{% block content %}
+<style>
+    .login-form p {
+        color: #333;
+        margin-bottom: 1rem;
+    }
+    .login-form input {
+        display: block;
+        width: 100%;
+        padding: 0.65rem 0.75rem;
+        border: 1px solid #adb5bd;
+        border-radius: 0.375rem;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-white text-center py-3" style="background-color: #1a1a1a;">
+                <h1 class="h4 mb-0 fw-bold">INICIAR SESION</h1>
+            </div>
+            <div class="card-body p-4 bg-white">
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        El usuario o la contrasena no son correctos.
+                    </div>
+                {% endif %}
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if next %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+                    <button type="submit" class="btn btn-dark w-100 fw-bold">ENTRAR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -65,12 +65,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'inicio' %}">INICIO</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_jugadores' %}">MI CLUB (PLANTILLA)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: #d4af37;" href="{% url 'crear_jugador' %}">MERCADO (FICHAR)</a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'lista_jugadores' %}">MI CLUB (PLANTILLA)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #d4af37;" href="{% url 'crear_jugador' %}">MERCADO (FICHAR)</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button class="nav-link btn btn-link" type="submit">CERRAR SESION</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">INICIAR SESION</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
