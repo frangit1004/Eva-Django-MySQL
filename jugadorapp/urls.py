@@ -1,7 +1,10 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
 
 urlpatterns = [
+    # Aqui conecte la API de GET y POST bajo /api/, para tener sus rutas ordenadas aparte de la pagina. (MJ)
+    path('api/', include('jugadorapp.api_urls')),
+
     # Nueva página principal que cargará al entrar a 127.0.0.1:8000/
     path('', views.inicio, name='inicio'), 
     
