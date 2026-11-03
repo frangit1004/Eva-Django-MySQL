@@ -78,7 +78,7 @@ class JugadoresAPIView(APIView):
         return Response([jugador_a_json(jugador) for jugador in jugadores], status=status.HTTP_200_OK)
 
     def post(self, request):
-        if request.content_type != 'application/json':
+        if not request.content_type or request.content_type.split(';', 1)[0].strip().lower() != 'application/json':
             return Response(
                 {'error': 'Utiliza Content-Type: application/json.'},
                 status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
@@ -113,7 +113,7 @@ class JugadorDetalleAPIView(APIView):
 
     def put(self, request, jugador_id):
         jugador = get_object_or_404(Jugador, pk=jugador_id)
-        if request.content_type != 'application/json':
+        if not request.content_type or request.content_type.split(';', 1)[0].strip().lower() != 'application/json':
             return Response(
                 {'error': 'Utiliza Content-Type: application/json.'},
                 status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,

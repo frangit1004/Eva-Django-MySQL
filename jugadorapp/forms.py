@@ -5,6 +5,18 @@ from .models import Jugador
 # Tú puedes reutilizar este mismo formulario o crear uno nuevo para tu vista de "Editar", 
 # pero recuerda que visualmente deben verse distintos según la pauta.
 class JugadorForm(forms.ModelForm):
+    edad = forms.IntegerField(
+        min_value=5,
+        max_value=99,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'min': '5', 'max': '99'}),
+        error_messages={
+            'required': 'La edad es obligatoria.',
+            'invalid': 'La edad debe ser un número entero.',
+            'min_value': 'La edad debe ser mayor o igual a 5 años.',
+            'max_value': 'La edad debe ser menor o igual a 99 años.',
+        },
+    )
+
     class Meta:
         model = Jugador
         fields = '__all__' # Trae todos los campos (nombre, apellido, edad, posicion)
@@ -13,31 +25,40 @@ class JugadorForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del jugador'}),
             'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellido del jugador'}),
-            # Validación numérica: La edad no puede ser menor a 5 años ni mayor a 99
-            'edad': forms.NumberInput(attrs={'class': 'form-control', 'min': '5', 'max': '99'}),
             'posicion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Delantero, Defensa'}),
         }
 
+    def clean_nombre(self):
+        raw_nombre = self.data.get('nombre')
+        if raw_nombre is not None and not isinstance(raw_nombre, str):
+            raise forms.ValidationError('Debe ser un texto.')
+        nombre = (self.cleaned_data.get('nombre') or '').strip()
+        if nombre and not nombre.replace(' ', '').isalpha():
+            raise forms.ValidationError('El nombre solo debe contener letras.')
+        return nombre
+
+    def clean_apellido(self):
+        raw_apellido = self.data.get('apellido')
+        if raw_apellido is not None and not isinstance(raw_apellido, str):
+            raise forms.ValidationError('Debe ser un texto.')
+        apellido = (self.cleaned_data.get('apellido') or '').strip()
+        if apellido and not apellido.replace(' ', '').isalpha():
+            raise forms.ValidationError('El apellido solo debe contener letras.')
+        return apellido
+
+    def clean_posicion(self):
+        raw_posicion = self.data.get('posicion')
+        if raw_posicion is not None and not isinstance(raw_posicion, str):
+            raise forms.ValidationError('Debe ser un texto.')
+        posicion = (self.cleaned_data.get('posicion') or '').strip()
+        if posicion and not posicion.replace(' ', '').isalpha():
+            raise forms.ValidationError('La posición solo debe contener letras.')
+        return posicion
+
 
 class JugadorAPIForm(JugadorForm):
-    edad = forms.IntegerField(
-        min_value=5,
-        max_value=99,
-        error_messages={
-            'required': 'La edad es obligatoria.',
-            'invalid': 'La edad debe ser un numero entero.',
-            'min_value': 'La edad debe ser mayor o igual a 5.',
-            'max_value': 'La edad debe ser menor o igual a 99.',
-        },
-    )
-
     def clean(self):
         cleaned_data = super().clean()
-        for field in ('nombre', 'apellido', 'posicion'):
-            value = self.data.get(field)
-            if value is not None and not isinstance(value, str):
-                self.add_error(field, 'Debe ser un texto.')
-
         edad = self.data.get('edad')
         if edad is not None and type(edad) is not int:
             self.add_error('edad', 'Debe ser un numero entero en JSON.')
