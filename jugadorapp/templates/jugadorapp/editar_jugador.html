@@ -1,0 +1,29 @@
+{% extends 'jugadorapp/base.html' %}
+
+{% block content %}
+<!-- Pantalla agregada para actualizar un jugador reutilizando el formulario existente. (MJ) -->
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-dark text-center py-3" style="background-color: #d4af37;">
+                <h4 class="mb-0 fw-bold">EDICION DE CARTA</h4>
+            </div>
+            <div class="card-body p-5 bg-white">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-4 text-secondary">
+                        <p class="small text-uppercase mb-4 border-bottom pb-2">Actualiza los datos de {{ jugador.nombre }} {{ jugador.apellido }}</p>
+                        {{ form.as_p }}
+                    </div>
+
+                    <div class="d-grid gap-3 mt-4">
+                        <button type="submit" class="btn btn-lg fw-bold shadow-sm text-dark" style="background-color: #d4af37;">GUARDAR CAMBIOS</button>
+                        <a href="{% url 'lista_jugadores' %}" class="btn btn-light border fw-bold text-secondary">CANCELAR Y VOLVER</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
